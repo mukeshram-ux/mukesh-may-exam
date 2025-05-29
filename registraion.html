@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration Form with Confirm Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .register-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+      display: none;
+      font-size: 13px;
+    }
+    button {
+      width: 100%;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Create Account</h2>
+    require_once 'db.php';
+    <form id="registerForm" action="register.php" method="POST" onsubmit="return validatePasswords()">
+      <label for="first_name">First Name</label>
+      <input type="text" id="first_name" name="first_name" required />
+
+      <label for="last_name">Last Name</label>
+      <input type="text" id="last_name" name="last_name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="phone_number">Phone Number</label>
+      <input type="tel" id="phone_number" name="phone_number" pattern="[0-9]{10,15}" required 
+             title="Please enter a valid phone number (10-15 digits)" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="6" />
+
+      <label for="confirm_password">Confirm Password</label>
+      <input type="password" id="confirm_password" name="confirm_password" required minlength="6" />
+
+      <div class="error-message" id="errorMsg">Passwords do not match!</div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function validatePasswords() {
+      const pwd = document.getElementById('password').value;
+      const cpwd = document.getElementById('confirm_password').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (pwd !== cpwd) {
+        errorMsg.style.display = 'block';
+        return false; // prevent form submission
+      }
+      errorMsg.style.display = 'none';
+      return true; // allow form submission
+    }
+  </script>
+</body>
+</html>
